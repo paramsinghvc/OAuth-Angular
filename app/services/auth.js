@@ -4,7 +4,7 @@ define(
         return [
             '$rootScope', 'ajax', '$location',
             function($rootScope, ajax, $location) {
-               
+
                 return {
                     check: function() {
                         return ajax({
@@ -15,8 +15,8 @@ define(
 
                     storeSessionKey: function(res) {
                         localStorage.setItem('sessionKey', res.xhr.getResponseHeader(config.apiKey));
-                        // this.postLoginTest();
-                        this.loadHome();
+                        this.postLoginTest();
+
                     },
                     logout: function() {
                         return ajax({
@@ -50,6 +50,7 @@ define(
                             .then(function(res) {
                                 if (!res.data.resource.industry_member) {
                                     $rootScope.$broadcast('no-member-attached');
+                                    alert('No Member Attached');
                                     self.logout();
                                 } else {
                                     localStorage.setItem('professionalId', res.data.resource.industry_member.id);

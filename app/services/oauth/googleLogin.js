@@ -43,7 +43,7 @@ define(['config'], function(config) {
 
                         function handleClientLoad() {
                             gapi.client.setApiKey(self.apiKey);
-                            window.setTimeout(checkAuth, 1);
+                            // window.setTimeout(checkAuth, 1);
                         }
 
                         function checkAuth() {
@@ -55,8 +55,13 @@ define(['config'], function(config) {
                         }
 
                         function handleAuthResult(authResult) {
+                            var token = authResult.access_token;
+                            console.log(authResult);
+                            if (authResult['status']['signed_in']) {
+                                self.postAccessToken(token);
+                            }
 
-                            self.postAccessToken(authResult.access_token);
+
 
                         }
 
@@ -65,24 +70,28 @@ define(['config'], function(config) {
                             client_id: self.clientId,
                             scope: self.scopes,
                             immediate: false
-                        }, handleAuthResult);                        
+                        }, handleAuthResult);
 
                     }
+                    return false
                 },
                 postAccessToken: function(accessToken) {
-                    ajax({
-                            type: 'POST',
-                            url: config.authBase + '/login',
-                            data: {
-                                oauth_provider: 'google',
-                                oauth_token: accessToken
-                            }
-                        })
-                        .then(function(res) {
+                    if (accessToken) {
+                        ajax({
+                                type: 'POST',
+                                url: config.authBase + '/login',
+                                data: {
+                                    oauth_provider: 'google',
+                                    oauth_token: accessToken
+                                }
+                            })
+                            .then(function(res) {
 
-                            auth.storeSessionKey(res);
+                                auth.storeSessionKey(res);
 
-                        }, function(err) {});
+                            }, function(err) {});
+                    }
+
                 }
             }
         }
