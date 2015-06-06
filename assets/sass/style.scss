@@ -1,0 +1,43 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+@for $i from 1 through 16 {
+    .top#{($i * 5)}
+    {
+        margin-top: $i*5px;
+    }
+}
+
+
+@for $i from 1 through 16 {
+    .bottom#{($i * 5)}
+    {
+        margin-bottom: $i*5px;
+    }
+}
+
+$fbButtonColor : #3B5998;
+$googleButtonColor : #d34836;
+
+#fbButton{
+    background-color: $fbButtonColor !important;
+    color : #fff;
+}
+
+#googleButton{
+    background-color: $googleButtonColor !important;
+    color : #fff;
+}
+
+.working {
+    height: 55px;
+    background: url('../images/471.GIF') no-repeat;
+    position: absolute;
+    width: 55px;
+    left: 50%;
+    margin-left: -27px;
+    top: 100px;
+    z-index: 100;
+}
